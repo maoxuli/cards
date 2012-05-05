@@ -10,6 +10,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cassert>
+#include <stdlib.h>
 
 //
 // Class: Card

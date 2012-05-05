@@ -103,8 +103,6 @@ int main(int argc, const char* argv[])
 		std::cout << "Please input a number of shuffle rounds (input 0 to exit): ";
 		int rounds = 0;
 		std::cin >> rounds;
-		std::cin.clear();
-		std::cin.sync();
 
 		if(rounds == 0)
 		{
@@ -133,7 +131,6 @@ int main(int argc, const char* argv[])
 	}
 	
 	std::cout << "Test is over!\n\n";
-	std::cin.get();
 	return 0;
 }
 

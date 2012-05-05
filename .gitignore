@@ -9,5 +9,6 @@
 *.suo
 *.opensdf
 Debug/
+Release/
 ipch/
 

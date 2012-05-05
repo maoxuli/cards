@@ -12,7 +12,6 @@
 #include <iostream>
 #include <iomanip>
 #include <cassert>
-#include <stdio.h>
 #include "cards.h"
 
 int main(int argc, const char* argv[])
@@ -48,6 +47,7 @@ int main(int argc, const char* argv[])
 	deck = NULL;
 	std::cout << "Game over!\n\n";
 	
+	std::cin.get();
 	return 0;
 }
 

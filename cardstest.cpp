@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <string>
 #include <cassert>
 #include "cards.h"
 
@@ -114,17 +115,17 @@ int main(int argc, const char* argv[])
 	// Test shuffle with different shuffle rounds
 	std::cout << "Test shuffle with different shuffle rounds.\n";
 	
-	int rounds = 0;
 	while(true)
 	{
 		std::cout << "Please input a number of shuffle rounds (input 0 to exit): ";
+		int rounds = 0;
 		std::cin >> rounds;
 
 		if(rounds == 0)
 		{
 			break;
 		}
-		
+
 		std::cout << "\nNew deck of cards for testing...\n";
 	
 		// Test with a new Deck
@@ -134,7 +135,6 @@ int main(int argc, const char* argv[])
 	
 		// Shuffle
 		std::cout << "\nShuffle rounds: " << rounds << "...\n";
-		getchar();
 		time_start();
 		deck->shuffle();
 		int t = time_elapse();

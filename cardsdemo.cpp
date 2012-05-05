@@ -44,13 +44,13 @@ int main(int argc, const char* argv[])
 	deck->shuffle();
 						
 	// Deal cards
-	std::cout << "\n3. Deal cards...\n";
+	std::cout << "\n3. Deal cards ( rank [suit] )...\n";
 	Card* card = deck->deal_one_card();
 	int i = 1;
 	while(card != NULL)
 	{		
 		std::cout << std::setw(2) << std::setiosflags(std::ios::right) << card->rank() 
-		<< std::setw(3) << std::setiosflags(std::ios::left) << "(" << card->suit() << ")"
+		<< std::setw(3) << std::setiosflags(std::ios::left) << "[" << card->suit() << "]"
 		<< (i++ % 4 == 0 ? "\n" : "\t\t");
 		card = deck->deal_one_card();
 	}
@@ -61,13 +61,13 @@ int main(int argc, const char* argv[])
 	deck->shuffle();
 						
 	// Deal cards
-	std::cout << "\n5. Deal cards...\n";
+	std::cout << "\n5. Deal cards ( rank [suit] )...\n";
 	card = deck->deal_one_card();
 	i = 1;
 	while(card != NULL && i < 25)
 	{		
 		std::cout << std::setw(2) << std::setiosflags(std::ios::right) << card->rank() 
-		<< std::setw(3) << std::setiosflags(std::ios::left) << "(" << card->suit() << ")"
+		<< std::setw(3) << std::setiosflags(std::ios::left) << "[" << card->suit() << "]"
 		<< (i++ % 4 == 0 ? "\n" : "\t\t");
 		card = deck->deal_one_card();
 	}
@@ -79,13 +79,13 @@ int main(int argc, const char* argv[])
 	deck->shuffle();
 						
 	// Deal cards
-	std::cout << "\n7. Deal cards...\n";
+	std::cout << "\n7. Deal cards ( rank [suit] )...\n";
 	card = deck->deal_one_card();
 	i = 1;
 	while(card != NULL)
 	{		
 		std::cout << std::setw(2) << std::setiosflags(std::ios::right) << card->rank() 
-		<< std::setw(3) << std::setiosflags(std::ios::left) << "(" << card->suit() << ")"
+		<< std::setw(3) << std::setiosflags(std::ios::left) << "[" << card->suit() << "]"
 		<< (i++ % 4 == 0 ? "\n" : "\t\t");
 		card = deck->deal_one_card();
 	}

@@ -111,13 +111,13 @@ int time_elapse()
 //
 void display(Deck* deck)
 {
-	std::cout << "Deck of cards (in order):\n";
+	std::cout << "Deck of cards ( rank [suit] ):\n";
 	Card* card = deck->deal_one_card();
 	int i = 1;
 	while(card != NULL)
 	{		
 		std::cout << std::setw(2) << std::setiosflags(std::ios::right) << card->rank() 
-		<< std::setw(3) << std::setiosflags(std::ios::left) << "(" << card->suit() << ")"
+		<< std::setw(3) << std::setiosflags(std::ios::left) << "[" << card->suit() << "]"
 		<< (i++ % 4 == 0 ? "\n" : "\t\t");
 		card = deck->deal_one_card();
 	}

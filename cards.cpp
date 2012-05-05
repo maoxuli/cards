@@ -97,6 +97,7 @@ bool Deck::initialize()
 	_iterator = _cards.begin();
 	
 	std::cout << "A deck of cards (52 cards) is initialized.\n";
+	return true;
 }
 
 // Shuffle with swap algorithm

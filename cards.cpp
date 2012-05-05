@@ -83,7 +83,7 @@ Deck::~Deck()
 void Deck::shuffle()
 {
 	// Initialize for rand()
-	srand(time(NULL));
+	srand(static_cast<int>(time(NULL)));
 	
 	int round = _shuffle_rounds;
 	int n = _cards.size();

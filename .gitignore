@@ -3,3 +3,13 @@ cardsdemo
 cardstest
 *.docx
 *.pdf
+*.sln
+*.sdf
+*.vcxproj
+*.filters
+*.user
+*.suo
+*.opensdf
+Debug/
+ipch/
+

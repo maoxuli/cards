@@ -17,7 +17,36 @@
 //
 // Timer for performance measure
 //
+#ifdef _WIN32
+#include <windows.h>
 
+LARGE_INTEGER timerFreq;
+LARGE_INTEGER startCounter;
+
+void time_start()
+{
+  QueryPerformanceFrequency(&timerFreq);
+  QueryPerformanceCounter(&startCounter);
+}
+
+// Time elapse from time_start
+// Return microseconds (us)
+int time_elapse()
+{
+  if (timerFreq.QuadPart == 0)
+  {
+    return -1;
+  }
+  else
+  {
+    LARGE_INTEGER stopCounter;
+    QueryPerformanceCounter(&stopCounter);
+    return static_cast<int>((stopCounter.QuadPart - startCounter.QuadPart) * 1000000 / timerFreq.QuadPart);
+  }
+}
+
+
+#else
 #include <time.h>
 #include <sys/time.h>
 
@@ -59,6 +88,8 @@ timespec diff(timespec &start, timespec &end)
     return temp;
 }
 
+#endif 
+
 int main(int argc, const char* argv[])
 {
 	std::cout << "\nThis a testing of Deck of Cards.\n"
@@ -87,11 +118,12 @@ int main(int argc, const char* argv[])
 	
 		// Shuffle
 		std::cout << "\nShuffle rounds: " << rounds << "...\n";
-		timespec time1, time2;
-		get_time(&time1);
+		//timespec time1, time2;
+		//get_time(&time1);
+		time_start();
 		deck->shuffle();
-		get_time(&time2);
-		std::cout << "Shuffled with " << diff(time1,time2).tv_sec << " seconds and " << diff(time1,time2).tv_nsec << " nanoseconds.\n\n";
+		int t = time_elapse();
+		std::cout << "Shuffled with " << t << " microseconds (us).\n\n";
 		deck->dump();
 	
 		// Clear deck

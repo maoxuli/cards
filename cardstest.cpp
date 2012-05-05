@@ -45,7 +45,6 @@ int time_elapse()
   }
 }
 
-
 #else
 #include <time.h>
 #include <sys/time.h>
@@ -55,9 +54,10 @@ int time_elapse()
 #include <mach/mach.h>
 #endif
 
-// System time
-void get_time(struct timespec *ts)
-{
+timespec startTimer;
+
+void sys_gettime(struct timespec* ts)
+{	
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
 	clock_serv_t cclock;
 	mach_timespec_t mts;
@@ -69,6 +69,22 @@ void get_time(struct timespec *ts)
 #else
 	clock_gettime(CLOCK_REALTIME, ts);
 #endif
+}
+
+void time_start()
+{
+	sys_gettime(&startTimer);
+}
+
+// Time elapse from time_start
+// Return microseconds (us)
+int time_elapse()
+{
+	timespec stopTimer;
+	sys_gettime(&stopTimer);
+	
+	return (stopTimer.tv_sec * 1000000 + stopTimer.tv_nsec / 1000) 
+		  	- (startTimer.tv_sec * 1000000 + startTimer.tv_nsec/1000);
 }
 
 // Time interval
@@ -118,8 +134,7 @@ int main(int argc, const char* argv[])
 	
 		// Shuffle
 		std::cout << "\nShuffle rounds: " << rounds << "...\n";
-		//timespec time1, time2;
-		//get_time(&time1);
+		getchar();
 		time_start();
 		deck->shuffle();
 		int t = time_elapse();
@@ -129,7 +144,7 @@ int main(int argc, const char* argv[])
 		// Clear deck
 		delete deck;
 		deck = NULL;
-		std::cout << "Deck is clear and destroyed!\n\n";
+		std::cout << "Testing is done.\n\n";
 	}
 	
 	std::cout << "Test is over!\n\n";

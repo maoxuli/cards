@@ -17,13 +17,21 @@
 
 //
 // Timer for performance measure
+// High precision timer over platforms of
+// Windows, Mac OS X, and Linux
+// Usage:
+// 1. time_start() to start timing
+// 2. time_elapse() to return time in microseconds (us) from time_start()
 //
-#ifdef _WIN32
+
+// For Windows
+#ifdef _WIN32 
 #include <windows.h>
 
 LARGE_INTEGER timerFreq;
 LARGE_INTEGER startCounter;
 
+// Start to timing
 void time_start()
 {
   QueryPerformanceFrequency(&timerFreq);
@@ -46,6 +54,7 @@ int time_elapse()
   }
 }
 
+// For Mac OS X and Linux
 #else
 #include <time.h>
 #include <sys/time.h>
@@ -57,6 +66,7 @@ int time_elapse()
 
 timespec startTimer;
 
+// Get current time of system in nanoseconds from ...
 void sys_gettime(struct timespec* ts)
 {	
 #ifdef __MACH__ // OS X does not have clock_gettime, use clock_get_time
@@ -72,6 +82,7 @@ void sys_gettime(struct timespec* ts)
 #endif
 }
 
+// Start timing
 void time_start()
 {
 	sys_gettime(&startTimer);
@@ -90,17 +101,53 @@ int time_elapse()
 
 #endif 
 
+//
+// Display deck of cards in order based on dealing cards operations
+// This function works depend on current iterator of the deck of cards
+// In general, it works only immediately after a instance of Deck is
+// initiated or shuffled.
+// In addition, once a deck of cards is displayed, it can not be 
+// dealted until shuffled again.
+//
+void display(Deck* deck)
+{
+	std::cout << "Deck of cards (in order):\n";
+	Card* card = deck->deal_one_card();
+	int i = 1;
+	while(card != NULL)
+	{		
+		std::cout << std::setw(2) << std::setiosflags(std::ios::right) << card->rank() 
+		<< std::setw(3) << std::setiosflags(std::ios::left) << "(" << card->suit() << ")"
+		<< (i++ % 4 == 0 ? "\n" : "\t\t");
+		card = deck->deal_one_card();
+	}
+	std::cout << "\n";
+}
+
+//
+// This is a testing process for Deck of Cards implementation.
+// The testing focused on shuffle algorithm.
+// Interactive with users to determine the rounds of shuffle.
+// Shuffle algorithm is measured in terms of running time.
+//
+
 int main(int argc, const char* argv[])
 {
-	std::cout << "\nThis a testing of Deck of Cards.\n"
-				 "Author: Maoxu Li, li@maoxuli.com\n\n";
+	std::cout << "\nThis is a testing of Deck of Cards.\n"
+				 "Author: Maoxu Li, li@maoxuli.com\n";
 	
-	// Test shuffle with different shuffle rounds
-	std::cout << "Test shuffle with different shuffle rounds.\n";
+	std::cout << "\nInitialize a deck of cards...\n";
+
+	// Test with a new Deck
+	Deck* deck = new Deck();
+	assert(deck != NULL);
+	display(deck);
+			
+	std::cout << "\nTesting of shuffle with different shuffle rounds.\n";
 	
 	while(true)
 	{
-		std::cout << "Please input a number of shuffle rounds (input 0 to exit): ";
+		std::cout << "\nPlease input a number of shuffle rounds (input 0 to exit): ";
 		int rounds = 0;
 		std::cin >> rounds;
 
@@ -108,29 +155,26 @@ int main(int argc, const char* argv[])
 		{
 			break;
 		}
-
-		std::cout << "\nNew deck of cards for testing...\n";
-	
-		// Test with a new Deck
-		Deck* deck = new Deck(rounds);
-		assert(deck != NULL);
-		deck->dump();
-	
+		
 		// Shuffle
 		std::cout << "\nShuffle rounds: " << rounds << "...\n";
 		time_start();
-		deck->shuffle();
+		
+		for(int i=0; i<rounds; ++i)
+		{
+			deck->shuffle();
+		}
+		
 		int t = time_elapse();
-		std::cout << "Shuffled with " << t << " microseconds (us).\n\n";
-		deck->dump();
-	
-		// Clear deck
-		delete deck;
-		deck = NULL;
-		std::cout << "Testing is done.\n\n";
+		std::cout << "Shuffled with " << t << " microseconds (us).\n";
+		display(deck);
 	}
 	
-	std::cout << "Test is over!\n\n";
+	std::cout << "\nDestroy the deck of cards...\n";
+	delete deck;
+	deck = NULL;
+	
+	std::cout << "\nTest is over!\n\n";
 	return 0;
 }
 

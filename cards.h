@@ -11,15 +11,28 @@
 
 #include <vector>
 
-enum SUIT { HEART, SPADE, CLUB, DIAMOND };
-
+//
+// A card is one entity of a deck of cards.
+// It is identified with rank (1~13) and 
+// suit (heart, spade, club, diamond).
+//
 class Card 
 {
 public:
+	enum SUIT { HEART = 0, SPADE, CLUB, DIAMOND };
+	
+	Card();
 	Card(int rank, SUIT suit);
 	virtual ~Card();
+
+	// A card can be set explicitly
+	// (or implicitly with constructor otherwise)
+	void set(int rank, SUIT suit);
 	
+	// return rank
 	int rank(); 
+	
+	// return suit
 	SUIT suit();	
 	
 private:
@@ -27,27 +40,33 @@ private:
 	SUIT _suit;
 };
 
+//
+// A deck of cards consists of a certian number of 
+// deiffernt cards (52 in this case). 
+// Shuffle and deal one card is implemented here.
+//
 class Deck 
 {
 public:
-	// Shuffle rounds, 0 for default rounds
-	Deck(int rounds = 0);
+	Deck();
 	virtual ~Deck();
 	
 	void shuffle();
 	Card* deal_one_card();
 	
-	// For testing purpose only
-	// display all cards in screen
-	void dump();
-	
 private:
+	// Internal operation to initialize deck of cards
+	bool initialize();
+	
 	typedef std::vector<Card*> CardSeq;
 	CardSeq _cards;
 	
-	int _shuffle_rounds; 
-	
-	 // Iterator for deal cards
+	// Iterator for deal cards
+	// Advance with deal cards operation
+	// Reset with shuffle operation
+	// Using iterator is safe here only because 
+	// card is not move or removed in this design.
+	// (Using index otherwise) 
 	CardSeq::const_iterator _iterator;
 };
 

@@ -2,7 +2,7 @@
 // This is a solution of classic Desk of Cards problem. 
 //
 // Author: Maoxu Li
-// Date: Apr 14, 2012
+// Date: May 4, 2012
 // Email: li@maoxuli.com
 //
 
@@ -16,11 +16,6 @@
 // Class: Card
 //
 
-Card::Card()
-{
-	
-}
-
 Card::Card(int rank, SUIT suit) : 
 	_rank(rank),
 	_suit(suit)
@@ -31,12 +26,6 @@ Card::Card(int rank, SUIT suit) :
 Card::~Card()
 {
 	
-}
-
-void Card::set(int rank, SUIT suit)
-{
-	_rank = rank;
-	_suit = suit;
 }
 
 int Card::rank()

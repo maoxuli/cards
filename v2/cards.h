@@ -1,5 +1,6 @@
 //
 // This is a solution of classic Desk of Cards problem. 
+// V2
 //
 // Author: Maoxu Li
 // Date: May 5, 2012
@@ -17,8 +18,8 @@
 // suit (heart, spade, club, diamond).
 //
 
-// Card is defined as a abstract class 
-// A interface for Card
+// Card is defined as interface of concrete card class 
+// Abstract class
 class Card 
 {
 public:
@@ -31,51 +32,26 @@ public:
 	virtual SUIT suit() = 0;
 	
 	// Draw card on screen
+	// Different types of cards has different implmentations
 	virtual void draw() = 0;	
 };
 
-// Card is iniatated with a card factory
-// A interface for Card Factory
+// A concrete card class is initiated with corresponding factory
+// CardFactory is defined as interface of concrete card factory
+// Abstract class
 class CardFactory
 {
 public:
 	virtual Card* create(int rank, Card::SUIT suit) = 0;
 };
 
-// Type of concrete deck of cards
+// Type of concrete cards
+// They have different suit design
 enum CARD_TYPE { DEFAULT_CARD_TYPE = 0, FRANCE_CARD_TYPE, GERMAN_CARD_TYPE };
 
-// Concrete card class for default card type 
-// Default implementation of card
-class DefaultCard : public Card
-{
-public:
-	DefaultCard();
-	DefaultCard(int rank, SUIT suit);
-	virtual ~DefaultCard();
-	
-	// A card may be set explicitly 
-	// (or implicitly with constructor otherwise)
-	void set(int rank, SUIT suit);
-	
-	// return rank
-	virtual int rank(); 
-	
-	// return suit
-	virtual SUIT suit();
-	
-	// Draw card on screen
-	virtual void draw();
-	
-protected:
-	int _rank;
-	SUIT _suit;	
-};
-
-//
-// A factory to initiate default type card
-// Singleton pattern
-//
+// Concrete card factory class for default card type
+// Singleton Pattern
+// Internal release, no outer release interface
 class DefaultCardFactory : public CardFactory
 {
 public:
@@ -106,13 +82,39 @@ private:
     static Deleter _deleter;
 };
 
+// Concrete card class for default card type 
+// Default implementation of card
+class DefaultCard : public Card
+{
+public:
+	virtual ~DefaultCard();
+	
+	// return rank
+	virtual int rank(); 
+	
+	// return suit
+	virtual SUIT suit();
+	
+	// Draw card on screen
+	virtual void draw();
+	
+private:
+	DefaultCard(); // no implementation
+	DefaultCard(int rank, SUIT suit);
+	friend class DefaultCardFactory;
+	
+	int _rank;
+	SUIT _suit;	
+};
+
 //
-// A deck of cards consists of a certian number of 
-// deiffernt cards (52 in this case). 
+// A deck of cards consists of a certian number cards (52 in this case). 
 // Shuffle and deal one card is implemented here.
-// Deck class is in a singleton pattern with destroy 
-// operation to create new singleton
 //
+
+// Singleton Pattern
+// with outer release interface
+// Must be released by caller before application exit
 class Deck 
 {
 public:
@@ -126,7 +128,7 @@ public:
 	Card* deal_one_card();
 	
 private:
-	Deck();
+	Deck(); // No implementation
 	Deck(CARD_TYPE type);
 	static Deck* _instance;
 	

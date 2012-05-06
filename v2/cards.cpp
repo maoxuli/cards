@@ -1,5 +1,6 @@
 //
 // This is a solution of classic Desk of Cards problem. 
+// V2
 //
 // Author: Maoxu Li
 // Date: May 5, 2012
@@ -16,11 +17,6 @@
 // Class: DefaultCard
 //
 
-DefaultCard::DefaultCard()
-{
-	
-}
-
 DefaultCard::DefaultCard(int rank, Card::SUIT suit) :
 	_rank(rank),
 	_suit(suit)
@@ -31,12 +27,6 @@ DefaultCard::DefaultCard(int rank, Card::SUIT suit) :
 DefaultCard::~DefaultCard()
 {
 	
-}
-
-void DefaultCard::set(int rank, SUIT suit)
-{
-	_rank = rank;
-	_suit = suit;
 }
 
 int DefaultCard::rank()
@@ -94,13 +84,6 @@ Card* DefaultCardFactory::create(int rank, Card::SUIT suit)
 //
 
 Deck* Deck::_instance = NULL;
-
-Deck::Deck() : 
-	_type(DEFAULT_CARD_TYPE)
-{	
-	// Todo: exception handling
-	initialize();
-}
 
 Deck::Deck(CARD_TYPE type) :
 	_type(type)

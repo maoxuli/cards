@@ -20,15 +20,10 @@ class Card
 {
 public:
 	enum SUIT { HEART = 0, SPADE, CLUB, DIAMOND };
-	
-	Card();
+
 	Card(int rank, SUIT suit);
 	virtual ~Card();
 
-	// A card can be set explicitly
-	// (or implicitly with constructor otherwise)
-	void set(int rank, SUIT suit);
-	
 	// return rank
 	int rank(); 
 	
@@ -36,6 +31,8 @@ public:
 	SUIT suit();	
 	
 private:
+	Card(); // no implementation
+	
 	int _rank;
 	SUIT _suit;
 };
@@ -58,6 +55,7 @@ private:
 	// Internal operation to initialize deck of cards
 	bool initialize();
 	
+	// Deck of cards
 	typedef std::vector<Card*> CardSeq;
 	CardSeq _cards;
 	

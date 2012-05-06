@@ -16,11 +16,6 @@
 // Class: Card
 //
 
-Card::Card()
-{
-	
-}
-
 Card::Card(int rank, SUIT suit) : 
 	_rank(rank),
 	_suit(suit)
@@ -31,12 +26,6 @@ Card::Card(int rank, SUIT suit) :
 Card::~Card()
 {
 	
-}
-
-void Card::set(int rank, SUIT suit)
-{
-	_rank = rank;
-	_suit = suit;
 }
 
 int Card::rank()

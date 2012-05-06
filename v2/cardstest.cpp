@@ -1,5 +1,6 @@
 //
 // This is a solution of classic Deck of Cards problem. 
+// V2
 //
 // Author: Maoxu Li
 // Date: Apr 14, 2012

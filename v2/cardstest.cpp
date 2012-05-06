@@ -140,7 +140,7 @@ int main(int argc, const char* argv[])
 	std::cout << "\nInitialize a deck of cards...\n";
 
 	// Test with a new Deck
-	Deck* deck = Deck::instance(DEFAULT_CARD_TYPE);
+	Deck* deck = Deck::instance(DEFAULT_CARD_STYLE);
 	assert(deck != NULL);
 	display(deck);
 			

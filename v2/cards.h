@@ -45,11 +45,11 @@ public:
 	virtual Card* create(int rank, Card::SUIT suit) = 0;
 };
 
-// Type of concrete cards
+// Style of concrete cards
 // They have different suit design
-enum CARD_TYPE { DEFAULT_CARD_TYPE = 0, FRANCE_CARD_TYPE, GERMAN_CARD_TYPE };
+enum CARD_STYLE { DEFAULT_CARD_STYLE = 0, FRANCE_CARD_STYLE, GERMAN_CARD_STYLE };
 
-// Concrete card factory class for default card type
+// Concrete card factory class for default card style
 // Singleton Pattern
 // Internal release, no outer release interface
 class DefaultCardFactory : public CardFactory
@@ -82,7 +82,7 @@ private:
     static Deleter _deleter;
 };
 
-// Concrete card class for default card type 
+// Concrete card class for default card style 
 // Default implementation of card
 class DefaultCard : public Card
 {
@@ -119,9 +119,9 @@ class Deck
 {
 public:
 	virtual ~Deck();
-	static Deck* instance(CARD_TYPE type = DEFAULT_CARD_TYPE);
+	static Deck* instance(CARD_STYLE style = DEFAULT_CARD_STYLE);
 	
-	CARD_TYPE type();
+	CARD_STYLE style();
 	void destroy();
 	
 	void shuffle();
@@ -129,12 +129,12 @@ public:
 	
 private:
 	Deck(); // No implementation
-	Deck(CARD_TYPE type);
+	Deck(CARD_STYLE type);
 	static Deck* _instance;
 	
 	// Internal operation to initialize deck of cards
 	bool initialize();
-	CARD_TYPE _type;
+	CARD_STYLE _style;
 	
 	// Deck of cards
 	typedef std::vector<Card*> CardSeq;

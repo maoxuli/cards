@@ -96,7 +96,7 @@ void Deck::shuffle()
 	srand(static_cast<int>(time(NULL)));
 
 	int n = _cards.size();
-	for(int i=n-1; i>0; --i)
+	for(int i=n-1; i>=0; --i)
 	{
 		std::swap(_cards[i], _cards[rand() % (i+1)]);
 	}

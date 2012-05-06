@@ -42,7 +42,7 @@ Card::SUIT DefaultCard::suit()
 void DefaultCard::draw()
 {
 	// Todo: draw card on screen
-	std::cout << "This is a card with DEFAULT_CARD_TYPE\n";
+	std::cout << "This is a card with DEFAULT_CARD_STYLE\n";
 }
 
 //
@@ -85,8 +85,8 @@ Card* DefaultCardFactory::create(int rank, Card::SUIT suit)
 
 Deck* Deck::_instance = NULL;
 
-Deck::Deck(CARD_TYPE type) :
-	_type(type)
+Deck::Deck(CARD_STYLE style) :
+	_style(style)
 {
 	// Todo: exception handling
 	initialize();
@@ -104,33 +104,32 @@ Deck::~Deck()
 	std::cout << "Deck of cards is clear and destructed.\n";
 }
 
-// Card type only works when the singleton deck instance is initiated
-// Otherwise the parameter is ommited
-Deck* Deck::instance(CARD_TYPE type)
+// Get single instance of Deck
+Deck* Deck::instance(CARD_STYLE style)
 {
 	// Lazy init
 	if(_instance == NULL)
 	{
-		_instance = new Deck(type);
+		_instance = new Deck(style);
 	}
 	
 	assert(_instance != NULL);
 	
-	if(_instance->type() != type)
+	if(_instance->style() != style)
 	{
 		//Current deck of cards is not the type requested
 		std::cout << "Request a new deck of cards when current is in use.\n";
-		std::cout << "Current type of cards: " << _instance->type() << "\n";
-		std::cout << "Request type of cards: " << type << "\n";
+		std::cout << "Current style of cards: " << _instance->style() << "\n";
+		std::cout << "Request style of cards: " << style << "\n";
 		return NULL;
 	}
 	
 	return _instance;
 }
 
-CARD_TYPE Deck::type()
+CARD_STYLE Deck::style()
 {
-	return _type;
+	return _style;
 }
 
 void Deck::destroy()
@@ -149,19 +148,19 @@ bool Deck::initialize()
 {
 	// Get corresponsding card factory to card type
 	CardFactory* factory = NULL;
-	switch(_type)
+	switch(_style)
 	{
-		case DEFAULT_CARD_TYPE:
+		case DEFAULT_CARD_STYLE:
 		{
 			factory = DefaultCardFactory::instance();
 		}
 		break;
-		case FRANCE_CARD_TYPE:
+		case FRANCE_CARD_STYLE:
 		{
 			//factory = FranceCardFactory::instance();
 		}
 		break;
-		case GERMAN_CARD_TYPE:
+		case GERMAN_CARD_STYLE:
 		{
 			//factory = GermanCardFactory::instance();
 		}
@@ -208,9 +207,9 @@ void Deck::shuffle()
 	srand(static_cast<int>(time(NULL)));
 
 	int n = _cards.size();
-	for(int i=n-1; i>0; --i)
+	for(int i=n-1; i>=0; --i)
 	{
-		std::swap(_cards[i], _cards[rand() % (i+1)]);
+		std::swap(_cards[i], _cards[rand() % (i+1)]); // Random range [0, i]
 	}
 
 	// Reset interator for dealing cards

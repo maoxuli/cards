@@ -37,7 +37,7 @@ int main(int argc, const char* argv[])
 	
 	// Initialize a deck of cards
 	std::cout << "\n1. Initialize a deck of cards...\n";
-	Deck* deck = Deck::instance(DEFAULT_CARD_TYPE);
+	Deck* deck = Deck::instance(DEFAULT_CARD_STYLE);
 	assert(deck != NULL);
 	
 	// Shuffle

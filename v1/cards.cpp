@@ -2,7 +2,7 @@
 // This is a solution of classic Desk of Cards problem. 
 //
 // Author: Maoxu Li
-// Date: Apr 14, 2012
+// Date: May 4, 2012
 // Email: li@maoxuli.com
 //
 

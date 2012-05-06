@@ -139,7 +139,7 @@ int main(int argc, const char* argv[])
 	std::cout << "\nInitialize a deck of cards...\n";
 
 	// Test with a new Deck
-	Deck* deck = new Deck();
+	Deck* deck = Deck::instance(DEFAULT_CARD_TYPE);
 	assert(deck != NULL);
 	display(deck);
 			
@@ -171,7 +171,7 @@ int main(int argc, const char* argv[])
 	}
 	
 	std::cout << "\nDestroy the deck of cards...\n";
-	delete deck;
+	deck->destroy();
 	deck = NULL;
 	
 	std::cout << "\nTest is over!\n\n";
